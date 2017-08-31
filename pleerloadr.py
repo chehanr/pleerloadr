@@ -13,6 +13,7 @@ CWD = os.getcwd()
 
 IDX = 0
 PAGE_IDX = 1
+SEARCH = ''
 QUALITY = 'best'
 SORT = 0
 
@@ -60,9 +61,9 @@ def download_track(title, artist, link):
         print('[SKIPPED] (already exists)')
 
 
-def get_track(input):
+def get_track(idx):
     """Handle downloads."""
-    input_list = input.split(',')
+    input_list = idx.split(',')
     for i in input_list:
         try:
             index = int(i.strip())
@@ -115,7 +116,7 @@ def fetch_results(soup):
     return result
 
 
-def get_results(SEARCH):
+def get_results():
     """Initial scrape."""
     base_url = 'http://pleer.net/'
     search_url = '%s%s' % (base_url, 'search')
@@ -145,12 +146,12 @@ def main():
             IDX = 0
             PAGE_IDX = 0
             del MASTER_LIST[:]
-            output = get_results(SEARCH)
+            output = get_results()
             print('\n' + output)
     elif option == 'm' or option == 'more':
         try:
             PAGE_IDX += 1
-            output = get_results(SEARCH)
+            output = get_results()
             print('\n' + output)
         except Exception as err:
             print('\nenter search query first [ERROR: %s]' % (err))
